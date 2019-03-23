@@ -1,9 +1,11 @@
 """
+Travel program - CSSE1001 - Assignment 1
 
+Questionaire to find the best travel destination for a user based on the 'destination' database.
 """
 
-__author__ = ""
-__date__ = ""
+__author__ = "Tean-louise McGrath"
+__date__ = "29.03.19"
 
 
 from destinations import Destinations
@@ -38,8 +40,6 @@ def match_continent(user, database):
         destination_continent = "oceania"
     elif user==7:
         destination_continent = "antartica"
-    else:
-        print ("None - Continent")
 
     if database.get_continent() == destination_continent:
         return True
@@ -50,7 +50,7 @@ def match_continent(user, database):
 def match_cost(user, database):
     """
     Match the user's input for 'cost' with the data from the database.  Assigns string inputs of user and database to match to integers to compare.
-    
+
     Paramaters:
         user (str): User's input when prompted for 'cost' preference. User input $ or $$ or $$
         database (str): Continent name stored in destinations database.
@@ -88,7 +88,7 @@ def match_cost(user, database):
 def match_children(user, database):
     """
     Match the user's input for 'kid friendly' with the data from the database.
-    
+
     Paramaters:
         user (int): User's input when prompted for 'kid friendly' preference. User input 1 or 2.
         database (bool): Stored in database as TRUE for kids and FALSE for not kid friendly.
@@ -112,7 +112,7 @@ def match_children(user, database):
 def match_crime(user, database):
     """
     Match the user's input for 'crime' with the data from the database.
-    
+
     Paramaters:
         user (str): User's input when prompted for 'crime' preference. User input 1 to 3.
         database (str): Crime level stored in destinations database.
@@ -139,7 +139,7 @@ def match_crime(user, database):
 def match_climate (user,database):
     """
     Match the user's input for 'climate' with the data from the database.
-    
+
     Paramaters:
         user (str): User's input when prompted for 'climate' preference. User input from 1 to 5.
         database (str): Climate description name stored in destinations database.
@@ -172,18 +172,18 @@ def match_climate (user,database):
 def match_season (user, database):
     """
     Match the user's input for 'season' with the associated season factor for each destination from the database.
-    
+
     Paramaters:
         user (str): User's input when prompted for 'season' preference. User input from 1 to 4.
         database (str): Season name stored in destinations database.
 
     Variables:
         destination_season (str): Retrieve the season factor associated with the user's input for 'season' from the database.
-        
+
     Return:
         str: The value of the season factor for the season is returned.
     """
-        
+
     if user == 1:
         destination_season = database.get_season_factor ("spring")
     elif user == 2:
@@ -194,41 +194,35 @@ def match_season (user, database):
         destination_season = database.get_season_factor ("winter")
 
     return destination_season
-    
-def match_interest (interestlist, database):
+
+def match_interest (interest_list, database):
     """
     Match the user's input for every 'interest' with the interest factor from the database.
-    
+
     Paramaters:
-        sports (str): User's input for 'sports' question.
-        wildlife (str): User's input for 'wildlife' question.
-        nature (str): User's input for 'nature' question.
-        historical (str): User's input for 'historical' question.
-        cuisine (str): User's input for 'cuisine' question.
-        adventure (str): User's input for 'adventure' question.
-        beach (str): User's input for 'beach' question.
+        interest_list (list): List of user's input from list of interests. Stored in list as float.
         database (float): Interest factor store for each interest in destinations database.
 
     Variables:
         sports_score (float): user input for 'sports' * database score for 'sports'
         [same for wildlife, nature, historical, cuisine, adventure, beach]
-        interest score (float): sum of all xxx_score
-        
+        destination_interest (float): sum of all xxx_score
+
     Return:
-        float: The result of the interest_score formula.
+        float: The result of the destination_interest formula.
     """
-    
-    sports_score = interestlist[0]*database.get_interest_score ("sports")
-    wildlife_score = interestlist[1]*database.get_interest_score ("wildlife")
-    nature_score = interestlist[2]*database.get_interest_score ("nature")
-    historical_score = interestlist[3]*database.get_interest_score ("historical")
-    cuisine_score = interestlist[4]*database.get_interest_score ("cuisine")
-    adventure_score = interestlist[5]*database.get_interest_score ("adventure")
-    beach_score = interestlist[6]*database.get_interest_score ("beach")
-    
+
+    sports_score = interest_list[0]*database.get_interest_score ("sports")
+    wildlife_score = interest_list[1]*database.get_interest_score ("wildlife")
+    nature_score = interest_list[2]*database.get_interest_score ("nature")
+    historical_score = interest_list[3]*database.get_interest_score ("historical")
+    cuisine_score = interest_list[4]*database.get_interest_score ("cuisine")
+    adventure_score = interest_list[5]*database.get_interest_score ("adventure")
+    beach_score = interest_list[6]*database.get_interest_score ("beach")
+
     destination_interest = sports_score + wildlife_score + nature_score + historical_score + cuisine_score + adventure_score + beach_score
     return destination_interest
-    
+
 def main():
     """
     Travel program. The user will be asked a number of questions and an exact match (or none) will be returned based on parameters.
@@ -247,15 +241,15 @@ def main():
 
     Variables:
         user_xxx: User input for each question. To be used as reference for parameters.
-        
-        interest_score: Variable for interest score of destination.
+
+        destination_interest: Variable for interest score of destination.
         season_factor: Variable for season factor of destination.
         destination_score: Total for a destination's interest score * destination's season factor.
 
     Return:
         destination.get_name of the country with the exact match for the parameters. If no exact match the return is 'none'.
     """
-     
+
     #INTRODUCTION - Welcome and name
     print ("Welcome to Travel Inspiration!")
     print ("")
@@ -271,7 +265,7 @@ def main():
         print ("")
         user_continent = int(input("> "))
         print ("Please try again")
-        
+
     print ("What is money to you?", "  $$$) No object", "  $$) Spendable, so long as I get value from doing so", "  $) Extremely important; I want to spend as little as possible", sep="\n")
     user_cost = input("> ")
     print ("")
@@ -292,52 +286,22 @@ def main():
     user_climate = int(input("> "))
     print ("")
 
-
     # INTEREST INPUTS - Sports, wildlife, nature, historical, cuisine, adventure, beach
     print ("Now we would like to ask you some questions about your interests, on a scale of -5 to 5. -5 indicates strong dislike, whereas 5 indicates strong interest, and 0 indicates indifference.")
     print ("")
 
-    
-    interest_list = ["sports", "wildlife", "nature", "historical sites", "fine dining", "adventure activities", "beach"]
-    interest_result = []
-    
-    for interest in interest_list:
+    interests_list = ["sports", "wildlife", "nature", "historical sites", "fine dining", "adventure activities", "beach"]
+    user_interests = []
+
+    for interest in interests_list:
         print ("How much do you like ", interest,"? (-5 to 5)")
         interest_result.append (float(input("> ")))
         print ("")
 
-    #print ("How much do you like sports? (-5 to 5)", )
-    #user_sports = input("> ")
-   # print ("")
-
-    #print ("How much do you like wildlife? (-5 to 5)", sep="\n")
-   # user_wildlife = input("> ")
-   # print ("")
-
-    #print ("How much do you like nature? (-5 to 5)", sep="\n")
-    #user_nature = input("> ")
-   # print ("")
-    
-   # print ("How much do you like historical sites? (-5 to 5)", sep="\n")
-    #user_historical =input("> ")
-    #print ("")
-
-    #print ("How much do you like fine dining? (-5 to 5)", sep="\n")
-   # user_cuisine =input("> ")
-    #print ("")
-
-   # print ("How much do you like adventure activities? (-5 to 5)", sep="\n")
-   # user_adventure = input("> ")
-   # print ("")
-
-    #print ("How much do you like the beach? (-5 to 5)", sep="\n")
-   # user_beach = input ("> ")
-   # print ("")
-  
     # CHECK PARAMETERS
     final_match = False
     greatest_score = -200
-    
+
     for destination in Destinations().get_all():
         if match_continent(int(user_continent), destination):
             if match_children(int(user_children), destination):
@@ -361,7 +325,6 @@ def main():
         else: print ("FAILED - Continent: ", destination.get_name())
 
     #FINAL OUTPUT:
-    
     print("Thank you for answering all our questions. Your next travel destination is:", sep="\n")
     if final_match == True:
         print (final_match_country_name)
