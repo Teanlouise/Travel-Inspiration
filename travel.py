@@ -1,7 +1,9 @@
 """
-Travel program - CSSE1001 - Assignment 1
+Travel Inspiration - CSSE1001 - Assignment 1
 
-Questionaire to find the best travel destination for a user based on the 'destination' database.
+A travel recommendation program. The user will be given a questionaire that
+matches their travel preferences to the 'destination' database to return the
+best match for the user.
 """
 
 __author__ = "Tean-louise McGrath"
@@ -11,13 +13,13 @@ __date__ = "29.03.19"
 from destinations import Destinations
 
 
-def match_continent(user, database):
+def match_continent(user_input, database_value):
     """
     Matches the user's input for 'Continent' with the data from destinations file.
 
     Paramaters:
-        user (str): User's input when prompted for 'continent' preference. User input between 1 and 7
-        database (str): Continent name stored in destinations database.
+        user_input (int): User's input when prompted for 'continent' preference. User input between 1 and 7
+        database_value (str): Continent name stored in destinations database.
 
     Variables:
         destination_continent (str): The name of the continent according to the user's input
@@ -26,96 +28,85 @@ def match_continent(user, database):
         bool: Destination is match (True), if and only if, the destination of the continent is an exact match for user.
     """
 
-    if user==1:
+    if user_input==1:
         destination_continent = "asia"
-    elif user==2:
+    elif user_input==2:
         destination_continent = "africa"
-    elif user==3:
+    elif user_input==3:
         destination_continent = "north america"
-    elif user==4:
+    elif user_input==4:
         destination_continent = "south america"
-    elif user==5:
+    elif user_input==5:
         destination_continent = "europe"
-    elif user==6:
+    elif user_input==6:
         destination_continent = "oceania"
-    elif user==7:
-        destination_continent = "antartica"
+    elif user_input==7:
+        destination_continent = "antarctica"
 
-    if database.get_continent() == destination_continent:
-        return True
-    else:
-        return False
+    # Return True if user matches database, else False
+    return (database_value == destination_continent)
 
-
-def match_cost(user, database):
+def match_cost(user_input, database_value):
     """
-    Match the user's input for 'cost' with the data from the database.  Assigns string inputs of user and database to match to integers to compare.
+    Match the user's input for 'cost' with the data from the database.  Convert string inputs of user and database to integers to compare.
 
     Paramaters:
-        user (str): User's input when prompted for 'cost' preference. User input $ or $$ or $$
-        database (str): Continent name stored in destinations database.
+        user_input (str): User's input when prompted for 'cost' preference. User input $ or $$ or $$$
+        database_value (str): Cost of destination stored in destinations database as $ or $$ or $$$
 
     Variables:
-        user_cost (int): Converts the users string input to integers 1 to 3.
-        destination_cost (int): Converts the database string values to integers 1 to 3 to match user_cost.
+        user_cost_int (int): Converts the users string input to integers 1 to 3.
+        destination_cost (int): Converts the database string values to integers 1 to 3.
 
     Return:
         bool: Destination is match (True) if the 'cost' of the destination in the database is less than or equal to the user's input (i.e. within user budget).
     """
 
-    if user=="$$$":
+    if user_input=="$$$":
         user_cost_int = 3
-    elif user=="$$":
+    elif user_input=="$$":
         user_cost_int = 2
-    elif user=="$":
+    elif user_input=="$":
         user_cost_int = 1
-    else:
-        print ("None")
 
-    if database.get_cost()=="$$$":
+    if database_value =="$$$":
         destination_cost = 3
-    elif database.get_cost()=="$$":
+    elif database_value =="$$":
         destination_cost = 2
-    elif database.get_cost()=="$":
+    elif database_value =="$":
         destination_cost = 1
 
+    # Return True if user matches database, else False
+    return (user_cost_int >= destination_cost)
 
-    if user_cost_int >= destination_cost:
-        return True
-    else:
-        return False
-
-def match_children(user, database):
+def match_children(user_input, database_value):
     """
     Match the user's input for 'kid friendly' with the data from the database.
 
     Paramaters:
-        user (int): User's input when prompted for 'kid friendly' preference. User input 1 or 2.
-        database (bool): Stored in database as TRUE for kids and FALSE for not kid friendly.
+        user_input (int): User's input when prompted for 'kid friendly' preference. User input 1 (Yes) or 2 (No).
+        database_value (bool): Stored in database as TRUE for kids (Yes) and FALSE for not kid friendly (No).
 
     Return:
         bool: True, if the user selects kid friendly (user input 1) and the destination is True. Or if user selects no preference (user input 2)
         Otherwise the functions returns false.
     """
 
-    # User requires kid friendly
-    if user == 1:
-        if database.is_kid_friendly() == True:
-            return True
-        else:
-            return False
-    # User has no preference i.e. not travelling with children so all countries match
+    # User requires kid friendly, check database. Return True if user matches database, else False
+    if user_input == 1:
+        return database_value
+    # User has no preference, always TRUE i.e. not travelling with children so all countries match
     else:
         return True
 
 
-def match_crime(user, database):
+def match_crime(user_input, database):
     """
     Match the user's input for 'crime' with the data from the database.
 
     Paramaters:
-        user (str): User's input when prompted for 'crime' preference. User input 1 to 3.
-        database (str): Crime level stored in destinations database.
+        user_input (int): User's input when prompted for 'crime' preference. User input 1 to 3.
+        database_value (str): Crime level stored in destinations database as low, average or high.
 
     Variables:
         destination_crime (str): Converts the database string values to integers 1 to 3 to match user input.
@@ -131,17 +122,17 @@ def match_crime(user, database):
     elif database.get_crime()=="high":
         destination_crime = 3
 
-    if user >= destination_crime:
+    if user_input >= destination_crime:
         return True
     else:
         return False
 
-def match_climate (user,database):
+def match_climate (user_input,database):
     """
     Match the user's input for 'climate' with the data from the database.
 
     Paramaters:
-        user (str): User's input when prompted for 'climate' preference. User input from 1 to 5.
+        user_input (str): User's input when prompted for 'climate' preference. User input from 1 to 5.
         database (str): Climate description name stored in destinations database.
 
     Variables:
@@ -164,17 +155,17 @@ def match_climate (user,database):
     else:
         print ("None Climate")
 
-    if user == destination_climate:
+    if user_input == destination_climate:
         return True
     else:
         return False
 
-def match_season (user, database):
+def match_season (user_input, database):
     """
     Match the user's input for 'season' with the associated season factor for each destination from the database.
 
     Paramaters:
-        user (str): User's input when prompted for 'season' preference. User input from 1 to 4.
+        user_input (str): User's input when prompted for 'season' preference. User input from 1 to 4.
         database (str): Season name stored in destinations database.
 
     Variables:
@@ -184,13 +175,13 @@ def match_season (user, database):
         str: The value of the season factor for the season is returned.
     """
 
-    if user == 1:
+    if user_input == 1:
         destination_season = database.get_season_factor ("spring")
-    elif user == 2:
+    elif user_input == 2:
         destination_season = database.get_season_factor ("summer")
-    elif user == 3:
+    elif user_input == 3:
         destination_season = database.get_season_factor ("autumn")
-    elif user == 4:
+    elif user_input == 4:
         destination_season = database.get_season_factor ("winter")
 
     return destination_season
@@ -279,7 +270,7 @@ def main():
     print ("")
 
     print ("Which season do you plan to travel in?", "  1) Spring", "  2) Summer", "  3) Autumn", "  4) Winter", sep="\n")
-    user_season = int(input("> "))
+    user_season = float(input("> "))
     print ("")
 
     print ("What climate do you prefer?", "  1) Cold", "  2) Cool", "  3) Moderate", "  4) Warm", "  5) Hot", sep="\n")
@@ -295,7 +286,7 @@ def main():
 
     for interest in interests_list:
         print ("How much do you like ", interest,"? (-5 to 5)")
-        interest_result.append (float(input("> ")))
+        user_interests.append (float(input("> ")))
         print ("")
 
     # CHECK PARAMETERS
@@ -303,13 +294,13 @@ def main():
     greatest_score = -200
 
     for destination in Destinations().get_all():
-        if match_continent(int(user_continent), destination):
-            if match_children(int(user_children), destination):
-                if match_cost (user_cost, destination):
-                    if match_crime (int(user_crime), destination):
-                        if match_climate (int(user_climate),destination):
-                            interest_score = match_interest (interest_result, destination)
-                            season_factor = match_season (float(user_season), destination)
+        if match_continent(user_continent, destination.get_continent()):
+            if match_children(user_children, destination.is_kid_friendly()):
+                if match_cost (user_cost, destination.get_cost()):
+                    if match_crime (user_crime, destination):
+                        if match_climate (user_climate,destination):
+                            interest_score = match_interest (user_interests, destination)
+                            season_factor = match_season (user_season, destination)
                             destination_score = interest_score * season_factor
                             if destination_score > greatest_score:
                                 greatest_score = destination_score
