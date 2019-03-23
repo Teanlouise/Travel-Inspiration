@@ -12,6 +12,23 @@ __date__ = "29.03.19"
 
 from destinations import Destinations
 
+def get_user_preference(question):
+    """
+    Ask the user a question about their travel preference and return the input as a string.
+
+    Paramaters:
+        question (str): Question to print for travel preference paramater
+
+    Variables:
+        user_input (str): Input from user in response to question
+
+    Return:
+        str: Return of input()
+    """
+    print(question)
+    user_input = input("> ")
+    print ("")
+    return user_input
 
 def match_continent(user_input, database_value):
     """
@@ -225,70 +242,42 @@ def main():
         greatest_score: The greatest score (interest factor*season factor) for final destinations. Value set to start at -200 (minimum score for any destination)
 
     Variables:
-        user_xxx: User input for each question. To be used as reference for parameters.
+        user_xxx: User input for each question on travel preference. To be used as reference for parameters.
 
         interest_score: Variable for interest score of destination.
         season_factor: Variable for season factor of destination.
         destination_score: Total for a destination's interest score * destination's season factor.
 
     Return:
-        destination.get_name of the country with the exact match for the parameters. If no exact match the return is 'None'.
+        If exact match for parameters found (True), print name of the country with the highest destination score. If no match (False), print "None"
     """
 
     #INTRODUCTION - Welcome and name
-    print ("Welcome to Travel Inspiration!")
-    print ("")
+    print ("Welcome to Travel Inspiration!\n")
     user_name = input("What is your name? ")
-    print ("")
-    print ("Hi, ", user_name, "!", sep="")
-    print ("")
+    print ("\nHi, ", user_name, "!\n", sep="")
 
     #TRAVEL PREFERENCE INPUTS - Continent, Money, Children, Season, Climate
-    user_continent = 0
-    while user_continent not in range (1,7):
-        print("Which continent would you like to travel to?", "  1) Asia", "  2) Africa", "  3) North America", "  4) South America", "  5) Europe", "  6) Oceania", "  7) Antarctica", sep="\n")
-        user_continent = int(input("> "))
-        print ("")
-        #print ("Please try again")
-
-    print ("What is money to you?", "  $$$) No object", "  $$) Spendable, so long as I get value from doing so", "  $) Extremely important; I want to spend as little as possible", sep="\n")
-    user_cost = input("> ")
-    print ("")
-
-    print ("How much crime is acceptable when you travel?", "  1) Low", "  2) Average", "  3) High",sep="\n" )
-    user_crime = int(input("> "))
-    print ("")
-
-    print ("Will you be travelling with children?", "  1) Yes", "  2) No", sep="\n")
-    user_children = int(input("> "))
-    print ("")
-
-    print ("Which season do you plan to travel in?", "  1) Spring", "  2) Summer", "  3) Autumn", "  4) Winter", sep="\n")
-    user_season = float(input("> "))
-    print ("")
-
-    print ("What climate do you prefer?", "  1) Cold", "  2) Cool", "  3) Moderate", "  4) Warm", "  5) Hot", sep="\n")
-    user_climate = int(input("> "))
-    print ("")
+    user_continent = int(get_user_preference("Which continent would you like to travel to?\n  1) Asia\n  2) Africa\n  3) North America\n  4) South America\n  5) Europe\n  6) Oceania\n  7) Antarctica"))
+    user_cost = get_user_preference("What is money to you?\n  $$$) No object\n  $$) Spendable, so long as I get value from doing so\n  $) Extremely important; I want to spend as little as possible")
+    user_crime = int(get_user_preference("How much crime is acceptable when you travel?\n  1) Low\n  2) Average\n  3) High"))
+    user_children = int(get_user_preference("Will you be travelling with children?\n  1) Yes\n  2) No"))
+    user_season = float(get_user_preference("Which season do you plan to travel in?\n  1) Spring\n  2) Summer\n  3) Autumn\n  4) Winter"))
+    user_climate = int(get_user_preference("What climate do you prefer?\n  1) Cold\n  2) Cool\n  3) Moderate\n  4) Warm\n  5) Hot"))
 
     # INTEREST INPUTS - Sports, wildlife, nature, historical, cuisine, adventure, beach
-    print ("Now we would like to ask you some questions about your interests, on a scale of -5 to 5. -5 indicates strong dislike, whereas 5 indicates strong interest, and 0 indicates indifference.")
-    print ("")
-
     # Loop through list of interests (destination_interests) and store user inputs in a new list (user_interests)
+    print ("Now we would like to ask you some questions about your interests, on a scale of -5 to 5. -5 indicates strong dislike, whereas 5 indicates strong interest, and 0 indicates indifference.\n")
     destination_interests = ["sports", "wildlife", "nature", "historical sites", "fine dining", "adventure activities", "the beach"]
     user_interests = []
-
     for interest in destination_interests:
         print ("How much do you like ", interest,"? (-5 to 5)", sep = "")
         user_interests.append (float(input("> ")))
         print ("")
 
     # CHECK PARAMETERS
+    greatest_score = -200 # Set as minimum possible score for any destination so any matching destination will have a higher score.
     final_match = False
-
-    # Set as minimum possible score for any destination so any matching destination will have a higher score.
-    greatest_score = -200
 
     for destination in Destinations().get_all():
         # For each destination run through parameters based on user inputs.
