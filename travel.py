@@ -30,6 +30,20 @@ def get_user_preference(question):
     print ("")
     return user_input
 
+def get_user_interest(database_list, user_input):
+    """
+    Ask the user a question about how much they like an interest between -5 and 5. Loop through lists of interests and store use inputs in new list.
+
+    Paramaters:
+        database_list (list): List of interests.
+        user_input (list): Start as empty list. User inputs stored as floats in list in order of interest asked.
+    """
+
+    for interest in database_list:
+        print ("How much do you like ", interest,"? (-5 to 5)", sep = "")
+        user_input.append (float(input("> ")))
+        print ("")
+
 def match_continent(user_input, database_value):
     """
     Matches the user's input for 'Continent' with the data from destinations file.
@@ -266,18 +280,14 @@ def main():
     user_climate = int(get_user_preference("What climate do you prefer?\n  1) Cold\n  2) Cool\n  3) Moderate\n  4) Warm\n  5) Hot"))
 
     # INTEREST INPUTS - Sports, wildlife, nature, historical, cuisine, adventure, beach
-    # Loop through list of interests (destination_interests) and store user inputs in a new list (user_interests)
     print ("Now we would like to ask you some questions about your interests, on a scale of -5 to 5. -5 indicates strong dislike, whereas 5 indicates strong interest, and 0 indicates indifference.\n")
     destination_interests = ["sports", "wildlife", "nature", "historical sites", "fine dining", "adventure activities", "the beach"]
     user_interests = []
-    for interest in destination_interests:
-        print ("How much do you like ", interest,"? (-5 to 5)", sep = "")
-        user_interests.append (float(input("> ")))
-        print ("")
+    get_user_interest(destination_interests, user_interests)
 
     # CHECK PARAMETERS
     greatest_score = -200 # Set as minimum possible score for any destination so any matching destination will have a higher score.
-    final_match = False
+    final_match = False # Set default of final match to false
 
     for destination in Destinations().get_all():
         # For each destination run through parameters based on user inputs.
