@@ -6,18 +6,19 @@ matches their travel preferences to the 'destination' database to return the
 best match for the user.
 """
 
-__author__ = "Tean-louise McGrath"
+__author__ = "Tean-louise McGrath (42637460)"
 __date__ = "29.03.19"
 
 
 from destinations import Destinations
 
-def get_user_preference(question):
+def get_user_preference(question, valid_range):
     """
     Ask the user a question about their travel preference and return the input as a string.
 
     Paramaters:
         question (str): Question to print for travel preference paramater
+        valid_range (list): List of strings that are valid inputs. Each preference unique range.
 
     Variables:
         user_input (str): Input from user in response to question
@@ -28,21 +29,34 @@ def get_user_preference(question):
     print(question)
     user_input = input("> ")
     print ("")
+    while user_input not in valid_range:
+        print ("I'm sorry, but ", user_input, " is not a valid choice. Please try again.\n", sep="")
+        print (question)
+        user_input = input("> ")
+        print ("")
+
     return user_input
 
-def get_user_interest(database_list, user_input):
+def get_user_interest(database_list, user_list):
     """
     Ask the user a question about how much they like an interest between -5 and 5. Loop through lists of interests and store use inputs in new list.
 
     Paramaters:
         database_list (list): List of interests.
         user_input (list): Start as empty list. User inputs stored as floats in list in order of interest asked.
+        valid_range (list): List of strings that are valid inputs.
     """
 
     for interest in database_list:
         print ("How much do you like ", interest,"? (-5 to 5)", sep = "")
-        user_input.append (float(input("> ")))
+        user_input = int(input("> "))
         print ("")
+        while user_input not in range(-5,6):
+            print ("I'm sorry, but ", user_input, " is not a valid choice. Please try again.\n", sep="")
+            print ("How much do you like ", interest,"? (-5 to 5)", sep = "")
+            user_input = int(input("> "))
+            print ("")
+        user_list.append (user_input)
 
 def match_continent(user_input, database_value):
     """
@@ -272,12 +286,12 @@ def main():
     print ("\nHi, ", user_name, "!\n", sep="")
 
     #TRAVEL PREFERENCE INPUTS - Continent, Money, Children, Season, Climate
-    user_continent = int(get_user_preference("Which continent would you like to travel to?\n  1) Asia\n  2) Africa\n  3) North America\n  4) South America\n  5) Europe\n  6) Oceania\n  7) Antarctica"))
-    user_cost = get_user_preference("What is money to you?\n  $$$) No object\n  $$) Spendable, so long as I get value from doing so\n  $) Extremely important; I want to spend as little as possible")
-    user_crime = int(get_user_preference("How much crime is acceptable when you travel?\n  1) Low\n  2) Average\n  3) High"))
-    user_children = int(get_user_preference("Will you be travelling with children?\n  1) Yes\n  2) No"))
-    user_season = float(get_user_preference("Which season do you plan to travel in?\n  1) Spring\n  2) Summer\n  3) Autumn\n  4) Winter"))
-    user_climate = int(get_user_preference("What climate do you prefer?\n  1) Cold\n  2) Cool\n  3) Moderate\n  4) Warm\n  5) Hot"))
+    user_continent = int(get_user_preference("Which continent would you like to travel to?\n  1) Asia\n  2) Africa\n  3) North America\n  4) South America\n  5) Europe\n  6) Oceania\n  7) Antarctica", ["1","2","3","4","5","6","7"]))
+    user_cost = get_user_preference("What is money to you?\n  $$$) No object\n  $$) Spendable, so long as I get value from doing so\n  $) Extremely important; I want to spend as little as possible", ["$$$", "$$","$"])
+    user_crime = int(get_user_preference("How much crime is acceptable when you travel?\n  1) Low\n  2) Average\n  3) High", ["1","2","3"]))
+    user_children = int(get_user_preference("Will you be travelling with children?\n  1) Yes\n  2) No", ["1","2"]))
+    user_season = float(get_user_preference("Which season do you plan to travel in?\n  1) Spring\n  2) Summer\n  3) Autumn\n  4) Winter", ["1","2","3","4"]))
+    user_climate = int(get_user_preference("What climate do you prefer?\n  1) Cold\n  2) Cool\n  3) Moderate\n  4) Warm\n  5) Hot", ["1","2","3","4","5"]))
 
     # INTEREST INPUTS - Sports, wildlife, nature, historical, cuisine, adventure, beach
     print ("Now we would like to ask you some questions about your interests, on a scale of -5 to 5. -5 indicates strong dislike, whereas 5 indicates strong interest, and 0 indicates indifference.\n")
@@ -322,7 +336,6 @@ def main():
         print (final_match_name)
     else:
         print ("None")
-        #print ("NO MATCH: ",destination.get_name(), destination.get_cost(), destination.is_kid_friendly(), destination.get_crime(), destination.get_climate())
 
 if __name__ == "__main__":
     main()
