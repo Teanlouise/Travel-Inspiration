@@ -1,6 +1,6 @@
 [Back to Home](https://teanlouise.github.io)
 
-![travel_inspiration](https://user-images.githubusercontent.com/19520346/69196910-9c563600-0b7b-11ea-9ece-85f2cd14cff0.PNG)
+![travel_inspiration](https://user-images.githubusercontent.com/19520346/69231404-bcfeaa00-0bd4-11ea-8b54-a4cf20bf992c.PNG)
 
 Using Python, I developed a travel destination recommendation program demonstrating the use of control structures and functional decomposition. It was submitted as Assignment 1 for CSSE1001 at UQ. Software design choices and documentation were a key aspect of the grading criteria.
 
